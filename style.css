@@ -1,4 +1,32 @@
 body {
+    background: #0e0e0f;
+}
+
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.key {
+  background-color: #969696;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.key.validate {
+  background-color: #4caf50;
+}
     background-color:#1d2b3a ;
     height: 100%;
 }
@@ -23,7 +51,7 @@ body {
     gap: 3px;
 }
 
-.row {
+.rowkb {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
