@@ -31,6 +31,10 @@ keys.forEach(key => {
             console.log(currentWord);
             if(currentWord === motToFind) {
                 console.log("win");
+            } else {
+                // mettre backgroud en vert si a la bonne place et meme lettre 
+                // mettre backgroud en jaune mauvais place mais lettre existe dans le mot 
+                // mettre backgroud en rouge si lettre inexistante dans motToFind 
             }
         } else if(step > 5 && step < 11) {
             currentWord = ''
