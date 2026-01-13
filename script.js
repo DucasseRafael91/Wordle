@@ -1,9 +1,9 @@
-// Récupère tous les boutons du clavier
-const buttons = document.querySelectorAll(".key");
+console.log("test")
 
-// Ajoute un écouteur de clic sur chaque bouton
-buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-        console.log(btn.textContent);
-    });
+const keys = document.querySelectorAll('.key');
+
+keys.forEach(key => {
+  key.addEventListener('click', e => {
+    console.log(e.target.textContent);
+  });
 });
