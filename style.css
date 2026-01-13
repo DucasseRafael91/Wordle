@@ -8,6 +8,18 @@ body {
     align-items: center;
 }
 
+header h1 {
+    color: rgba(255, 255, 255, 0.829);    
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings:
+    "wdth" 100;
+}
+
+
+
 .keyboard {
   margin-top: 150px;
   display: flex;
