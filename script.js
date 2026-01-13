@@ -1,7 +1,9 @@
 console.log("test")
 
-const key = document.querySelectorAll('key')
+const keys = document.querySelectorAll('.key');
 
-key.addEventListener("click", function (e) {
-    console.log(e.target.value);
-})
+keys.forEach(key => {
+  key.addEventListener('click', e => {
+    console.log(e.target.textContent);
+  });
+});
