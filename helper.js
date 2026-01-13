@@ -61,3 +61,4 @@ function checkWord(wordTried, wordToGuess){
 
 //test zone
 console.log(checkWord('viuet','vieux'));
+ 

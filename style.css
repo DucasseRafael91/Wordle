@@ -81,6 +81,7 @@ header h1 {
     border-radius: 6px;
     margin: 1px;
     gap: 1px;
+    color: white;
 }
 
 .rowkb {
@@ -103,4 +104,15 @@ header h1 {
 #return{
     width: 90px;
     height: 60px;
+}
+.correct {
+  background-color: green;
+}
+
+.present {
+  background-color: orange;
+}
+
+.absent {
+  background-color: red;
 }
