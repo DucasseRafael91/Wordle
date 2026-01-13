@@ -3,51 +3,58 @@ const blocs = document.querySelectorAll('.letter-container');
 
 let step = 0;
 const data = [];
-currentWord = ""
-motToFind = 'table'
+let currentWord = "";
+const motToFind = 'table';
 
+const WORD_LENGTH = 5;
+const MAX_ATTEMPTS = 6;
 
-keys.forEach(key => {
-  key.addEventListener("click", e => {
-    const value = e.target.textContent;
+function getCurrentRowStart() {
+    return Math.floor(step / WORD_LENGTH) * WORD_LENGTH;
+}
 
-    if (value === "Return") {
-      if (step > 0) {
-        step--;
-        blocs[step].textContent = "";
-        data.pop();
-      }
-    } else {
-      if (step < blocs.length) {
-        blocs[step].textContent = value;
-        data.push(value);
-        step++;
-        console.log(step);
-        if(step  === 5) {
-            for (let index = 0; index < 6; index++) {
-                currentWord += data[index]                
-            }
-            console.log('current');
-            console.log(currentWord);
-            if(currentWord === motToFind) {
-                console.log("win");
-            } else {
-                // mettre backgroud en vert si a la bonne place et meme lettre 
-                // mettre backgroud en jaune mauvais place mais lettre existe dans le mot 
-                // mettre backgroud en rouge si lettre inexistante dans motToFind 
-            }
-        } else if(step > 5 && step < 11) {
-            currentWord = ''
-            for (let index = 5; index < 11; index++) {
-                currentWord += data[index]                
-            }
-            console.log('here value entre 5 et 10', step);
+function checkWord(rowStart) {
+    currentWord = data.slice(rowStart, rowStart + WORD_LENGTH).join('');
+
+    for (let i = 0; i < WORD_LENGTH; i++) {
+        const letter = data[rowStart + i];
+        const bloc = blocs[rowStart + i];
+
+        if (letter.toLowerCase() === motToFind[i]) {
+            bloc.classList.add("correct");
+        } else if (motToFind.includes(letter.toLowerCase())) {
+            bloc.classList.add("present");
+        } else {
+            bloc.classList.add("absent");
         }
-      }
     }
 
-    console.log("data", data);
-  });
+    if (currentWord.toLowerCase() === motToFind) {
+        console.log("WIN");
+    }
+}
+
+keys.forEach(key => {
+    key.addEventListener("click", e => {
+        const value = e.target.textContent;
+
+        if (value === "Return") {
+            if (step > 0) {
+                step--;
+                blocs[step].textContent = "";
+                data.pop();
+            }
+        } else {
+            if (step < blocs.length) {
+                blocs[step].textContent = value;
+                data.push(value);
+                step++;
+
+                // Vérifier à chaque fin de ligne (5, 10, 15, 20, 25, 30)
+                if (step % WORD_LENGTH === 0 && step <= WORD_LENGTH * MAX_ATTEMPTS) {
+                    checkWord(step - WORD_LENGTH);
+                }
+            }
+        }
+    });
 });
-
-
