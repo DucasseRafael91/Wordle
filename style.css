@@ -1,33 +1,49 @@
 body {
+    margin: 0;
+    min-height: 100vh;
     background: #0e0e0f;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
 }
 
 .keyboard {
+  margin-top: 150px;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
 .row {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
+    padding: 5px;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
 }
 
 .key {
   background-color: #969696;
   color: white;
   border: none;
+  margin: 2px;
   border-radius: 6px;
   padding: 10px 14px;
   font-weight: bold;
   cursor: pointer;
 }
 
+.key:hover{
+    background-color: #7a7a7a ;
+}
+
 .key.validate {
     background-color: #4caf50;
-    background-color:#1d2b3a ;
     height: 100%;
+}
+
+.key.validate:hover{
+    background-color: #439b46;
 }
 
 #game-container {
@@ -55,4 +71,19 @@ body {
     flex-direction: row;
     flex-wrap: wrap;
     margin-bottom: 5px;
+}
+
+.rowkb .key{
+    width: 43px;
+    height: 60px;
+}
+
+#validate{
+    width: 90px;
+    height: 60px;
+}
+
+#return{
+    width: 90px;
+    height: 60px;
 }
