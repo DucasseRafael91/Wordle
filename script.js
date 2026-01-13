@@ -3,6 +3,9 @@ const blocs = document.querySelectorAll('.letter-container');
 
 let step = 0;
 const data = [];
+currentWord = ""
+motToFind = 'table'
+
 
 keys.forEach(key => {
   key.addEventListener("click", e => {
@@ -21,7 +24,20 @@ keys.forEach(key => {
         step++;
         console.log(step);
         if(step  === 5) {
-            console.log('five');
+            for (let index = 0; index < 6; index++) {
+                currentWord += data[index]                
+            }
+            console.log('current');
+            console.log(currentWord);
+            if(currentWord === motToFind) {
+                console.log("win");
+            }
+        } else if(step > 5 && step < 11) {
+            currentWord = ''
+            for (let index = 5; index < 11; index++) {
+                currentWord += data[index]                
+            }
+            console.log('here value entre 5 et 10', step);
         }
       }
     }
