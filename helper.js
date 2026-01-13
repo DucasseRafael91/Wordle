@@ -37,24 +37,27 @@ function checkWord(wordTried, wordToGuess){
 
     //go throught each letter to check if they are really placed
     wordTried.split("").forEach((letter,index) => {
-        if(letter == wordToGuess.split("")[index]){
+        if(letter == wordToGuess.charAt(index)){
             //add letter to index
-            response.correctPlacedLetters.push({index:letter})
+            response.correctPlacedLetters.push({'letter':letter,'index':index})
         }
     });
 
     //go throught each letter if they are not placed but present
     wordTried.split("").forEach((letter,index) => {
-        if(letter == wordToGuess.split("")[index]){
+        //check if index is the same as found as correctPlacedLetter
+        const isIndexUsed = response.correctPlacedLetters.some(
+            item => item.index === index
+        );
+        
+        if(!isIndexUsed && wordToGuess.includes(letter)){
             //add letter to index
-            response.correctPlacedLetters.push({index:letter})
+            response.correctButNotPlacedLetters.push({'letter':letter,'index':index})
         }
     });
-    
-    
-
 
     return response;
 }
 
-console.log(checkWord('vieut','vieux'));
+//test zone
+console.log(checkWord('viuet','vieux'));
