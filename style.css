@@ -90,6 +90,7 @@ header h1 {
     flex-direction: row;
     flex-wrap: wrap;
     margin-bottom: 5px;
+    justify-content: center;
 }
 
 .rowkb .key{
