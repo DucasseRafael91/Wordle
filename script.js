@@ -35,26 +35,29 @@ function checkWord(rowStart) {
 }
 
 keys.forEach(key => {
-    key.addEventListener("click", e => {
-        const value = e.target.textContent;
+  key.addEventListener("click", e => {
+    const value = e.target.textContent;
 
-        if (value === "Return") {
-            if (step > 0) {
-                step--;
-                blocs[step].textContent = "";
-                data.pop();
-            }
-        } else {
-            if (step < blocs.length) {
-                blocs[step].textContent = value;
-                data.push(value);
-                step++;
+    if (value === "Restart") {
+      window.location.reload();
+    } 
+    else if (value === "Return") {
+      if (step > 0) {
+        step--;
+        blocs[step].textContent = "";
+        data.pop();
+      }
+    } 
+    else {
+      if (step < blocs.length) {
+        blocs[step].textContent = value;
+        data.push(value);
+        step++;
 
-                // Vérifier à chaque fin de ligne (5, 10, 15, 20, 25, 30)
-                if (step % WORD_LENGTH === 0 && step <= WORD_LENGTH * MAX_ATTEMPTS) {
-                    checkWord(step - WORD_LENGTH);
-                }
-            }
+        if (step % WORD_LENGTH === 0 && step <= WORD_LENGTH * MAX_ATTEMPTS) {
+          checkWord(step - WORD_LENGTH);
         }
-    });
+      }
+    }
+  });
 });
