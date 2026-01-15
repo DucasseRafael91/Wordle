@@ -1,9 +1,29 @@
 const keys = document.querySelectorAll('.key');
 const blocs = document.querySelectorAll('.letter-container');
 
+  words = [
+    "table",
+    "sable",
+    "linge",
+    "crime",
+    "porte",
+    "champ",
+    "flute",
+    "bravo",
+    "cadre",
+    "fouet",
+  ]
+
+function chooseWord(){
+    const randomWords = words[Math.floor(Math.random() * words.length)];
+    return randomWords;
+}
+
 let step = 0;
 const data = [];
-const motToFind = 'table';
+let currentWord = "";
+let motToFind = chooseWord();
+console.log(motToFind);
 
 const WORD_LENGTH = 5;
 const MAX_ATTEMPTS = 6;
@@ -38,30 +58,28 @@ function checkWord(rowStart) {
 }
 
 keys.forEach(key => {
-    key.addEventListener("click", e => {
-        const value = e.target.textContent;
-        const currentRow = Math.floor(step / WORD_LENGTH);
+  key.addEventListener("click", e => {
+    const value = e.target.textContent;
 
-        if (lockedRows[currentRow]) return;
-
-        if (value === "Restart") {
-            window.location.reload();
-        } else if (value === "Return") {
-            if (step > currentRow * WORD_LENGTH) {
-                step--;
-                blocs[step].textContent = "";
-                data.pop();
-            }
-        } else {
-            if (step < blocs.length) {
-                blocs[step].textContent = value;
-                data.push(value);
-                step++;
-
-                if (step % WORD_LENGTH === 0 && currentRow < MAX_ATTEMPTS) {
-                    checkWord(step - WORD_LENGTH);
-                }
-            }
+    if (value === "Restart") {
+      window.location.reload();
+    } 
+    else if (value === "Return") {
+      if (step > 0) {
+        step--;
+        blocs[step].textContent = "";
+        data.pop();
+      }
+    } 
+    else {
+      if (step < blocs.length) {
+        checkpalier()
+        blocs[step].textContent = value;
+        data.push(value);
+        step++;
+        
+        if (step % WORD_LENGTH === 0 && step <= WORD_LENGTH * MAX_ATTEMPTS) {
+          checkWord(step - WORD_LENGTH);
         }
     });
 });
