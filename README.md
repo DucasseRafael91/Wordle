@@ -35,13 +35,13 @@ Jeu de devinettes inspiré de **Wordle** : l’objectif est de trouver un mot de
 
  ```text
 Wordle/
-├─ index.html
-├─ styles.css
-├─ script.js
-├─ assets/
-│  ├─ favicon
-│  └─ logo.png
-└─ README.md
+   ├─ index.html
+   ├─ styles.css
+   ├─ script.js
+   ├─ images/
+   │  ├─ favicon
+   │  └─ logo.png
+   └─ README.md
  ```
 
 ## License
