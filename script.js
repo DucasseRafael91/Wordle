@@ -3,18 +3,19 @@ const blocs = document.querySelectorAll('.letter-container');
 
 let step = 0;
 const data = [];
-let currentWord = "";
 const motToFind = 'table';
 
 const WORD_LENGTH = 5;
 const MAX_ATTEMPTS = 6;
+
+const lockedRows = new Array(MAX_ATTEMPTS).fill(false);
 
 function getCurrentRowStart() {
     return Math.floor(step / WORD_LENGTH) * WORD_LENGTH;
 }
 
 function checkWord(rowStart) {
-    currentWord = data.slice(rowStart, rowStart + WORD_LENGTH).join('');
+    const currentWord = data.slice(rowStart, rowStart + WORD_LENGTH).join('');
 
     for (let i = 0; i < WORD_LENGTH; i++) {
         const letter = data[rowStart + i];
@@ -29,35 +30,38 @@ function checkWord(rowStart) {
         }
     }
 
+    lockedRows[Math.floor(rowStart / WORD_LENGTH)] = true;
+
     if (currentWord.toLowerCase() === motToFind) {
         console.log("WIN");
     }
 }
 
 keys.forEach(key => {
-  key.addEventListener("click", e => {
-    const value = e.target.textContent;
+    key.addEventListener("click", e => {
+        const value = e.target.textContent;
+        const currentRow = Math.floor(step / WORD_LENGTH);
 
-    if (value === "Restart") {
-      window.location.reload();
-    } 
-    else if (value === "Return") {
-      if (step > 0) {
-        step--;
-        blocs[step].textContent = "";
-        data.pop();
-      }
-    } 
-    else {
-      if (step < blocs.length) {
-        blocs[step].textContent = value;
-        data.push(value);
-        step++;
+        if (lockedRows[currentRow]) return;
 
-        if (step % WORD_LENGTH === 0 && step <= WORD_LENGTH * MAX_ATTEMPTS) {
-          checkWord(step - WORD_LENGTH);
+        if (value === "Restart") {
+            window.location.reload();
+        } else if (value === "Return") {
+            if (step > currentRow * WORD_LENGTH) {
+                step--;
+                blocs[step].textContent = "";
+                data.pop();
+            }
+        } else {
+            if (step < blocs.length) {
+                blocs[step].textContent = value;
+                data.push(value);
+                step++;
+
+                if (step % WORD_LENGTH === 0 && currentRow < MAX_ATTEMPTS) {
+                    checkWord(step - WORD_LENGTH);
+                }
+            }
         }
-      }
-    }
-  });
+    });
 });
