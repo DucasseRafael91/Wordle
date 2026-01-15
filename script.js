@@ -1,10 +1,29 @@
 const keys = document.querySelectorAll('.key');
 const blocs = document.querySelectorAll('.letter-container');
 
+  words = [
+    "table",
+    "sable",
+    "linge",
+    "crime",
+    "porte",
+    "champ",
+    "flute",
+    "bravo",
+    "cadre",
+    "fouet",
+  ]
+
+function chooseWord(){
+    const randomWords = words[Math.floor(Math.random() * words.length)];
+    return randomWords;
+}
+
 let step = 0;
 const data = [];
 let currentWord = "";
-const motToFind = 'table';
+let motToFind = chooseWord();
+console.log(motToFind);
 
 const WORD_LENGTH = 5;
 const MAX_ATTEMPTS = 6;
@@ -50,10 +69,11 @@ keys.forEach(key => {
     } 
     else {
       if (step < blocs.length) {
+        checkpalier()
         blocs[step].textContent = value;
         data.push(value);
         step++;
-
+        
         if (step % WORD_LENGTH === 0 && step <= WORD_LENGTH * MAX_ATTEMPTS) {
           checkWord(step - WORD_LENGTH);
         }
