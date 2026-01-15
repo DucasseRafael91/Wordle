@@ -1,60 +1,79 @@
 const keys = document.querySelectorAll('.key');
 const blocs = document.querySelectorAll('.letter-container');
 
-let step = 0;
-const data = [];
-let currentWord = "";
-const motToFind = 'table';
+const words = [
+  "table", "sable", "linge", "crime", "porte",
+  "champ", "flute", "bravo", "cadre", "fouet",
+];
+
+function chooseWord() {
+  return words[Math.floor(Math.random() * words.length)];
+}
 
 const WORD_LENGTH = 5;
 const MAX_ATTEMPTS = 6;
 
-function getCurrentRowStart() {
-    return Math.floor(step / WORD_LENGTH) * WORD_LENGTH;
-}
+let step = 0;
+let data = [];
+let motToFind = chooseWord();
+console.log(motToFind);
 
+const lockedRows = new Array(MAX_ATTEMPTS).fill(false);
+
+/* 🔹 Vérifie une ligne */
 function checkWord(rowStart) {
-    currentWord = data.slice(rowStart, rowStart + WORD_LENGTH).join('');
+  const word = data.slice(rowStart, rowStart + WORD_LENGTH).join('').toLowerCase();
 
-    for (let i = 0; i < WORD_LENGTH; i++) {
-        const letter = data[rowStart + i];
-        const bloc = blocs[rowStart + i];
+  for (let i = 0; i < WORD_LENGTH; i++) {
+    const letter = data[rowStart + i].toLowerCase();
+    const bloc = blocs[rowStart + i];
 
-        if (letter.toLowerCase() === motToFind[i]) {
-            bloc.classList.add("correct");
-        } else if (motToFind.includes(letter.toLowerCase())) {
-            bloc.classList.add("present");
-        } else {
-            bloc.classList.add("absent");
-        }
+    if (letter === motToFind[i]) {
+      bloc.classList.add("correct");
+    } else if (motToFind.includes(letter)) {
+      bloc.classList.add("present");
+    } else {
+      bloc.classList.add("absent");
     }
+  }
 
-    if (currentWord.toLowerCase() === motToFind) {
-        console.log("WIN");
-    }
+  lockedRows[rowStart / WORD_LENGTH] = true;
+
+  if (word === motToFind) {
+    console.log("WIN");
+  }
 }
-
 keys.forEach(key => {
-    key.addEventListener("click", e => {
-        const value = e.target.textContent;
+  key.addEventListener("click", e => {
+    const value = e.target.textContent;
 
-        if (value === "Return") {
-            if (step > 0) {
-                step--;
-                blocs[step].textContent = "";
-                data.pop();
-            }
-        } else {
-            if (step < blocs.length) {
-                blocs[step].textContent = value;
-                data.push(value);
-                step++;
+    const currentRow = Math.floor(step / WORD_LENGTH);
+    const rowStart = currentRow * WORD_LENGTH;
 
-                // Vérifier à chaque fin de ligne (5, 10, 15, 20, 25, 30)
-                if (step % WORD_LENGTH === 0 && step <= WORD_LENGTH * MAX_ATTEMPTS) {
-                    checkWord(step - WORD_LENGTH);
-                }
-            }
-        }
-    });
+    if (value === "Restart") {
+      window.location.reload();
+      return;
+    }
+
+    if (value === "Return") {
+      if (step > rowStart && !lockedRows[currentRow]) {
+        step--;
+        blocs[step].textContent = "";
+        data.pop();
+      }
+      return;
+    }
+
+    if (lockedRows[currentRow]) return;
+
+    if (step < blocs.length && step < rowStart + WORD_LENGTH) {
+      blocs[step].textContent = value;
+      data.push(value);
+      step++;
+    }
+
+    if (step % WORD_LENGTH === 0) {
+      checkWord(step - WORD_LENGTH);
+    }
+  });
 });

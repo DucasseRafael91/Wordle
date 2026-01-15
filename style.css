@@ -21,11 +21,12 @@ header h1 {
 
 
 .keyboard {
-  margin-top: 150px;
+  margin-top: 20px; 
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
+
 
 .row {
     padding: 5px;
@@ -89,6 +90,7 @@ header h1 {
     flex-direction: row;
     flex-wrap: wrap;
     margin-bottom: 5px;
+    justify-content: center;
 }
 
 .rowkb .key{
