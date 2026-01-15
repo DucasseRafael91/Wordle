@@ -28,12 +28,14 @@ console.log(motToFind);
 const WORD_LENGTH = 5;
 const MAX_ATTEMPTS = 6;
 
+const lockedRows = new Array(MAX_ATTEMPTS).fill(false);
+
 function getCurrentRowStart() {
     return Math.floor(step / WORD_LENGTH) * WORD_LENGTH;
 }
 
 function checkWord(rowStart) {
-    currentWord = data.slice(rowStart, rowStart + WORD_LENGTH).join('');
+    const currentWord = data.slice(rowStart, rowStart + WORD_LENGTH).join('');
 
     for (let i = 0; i < WORD_LENGTH; i++) {
         const letter = data[rowStart + i];
@@ -47,6 +49,8 @@ function checkWord(rowStart) {
             bloc.classList.add("absent");
         }
     }
+
+    lockedRows[Math.floor(rowStart / WORD_LENGTH)] = true;
 
     if (currentWord.toLowerCase() === motToFind) {
         console.log("WIN");
@@ -77,7 +81,5 @@ keys.forEach(key => {
         if (step % WORD_LENGTH === 0 && step <= WORD_LENGTH * MAX_ATTEMPTS) {
           checkWord(step - WORD_LENGTH);
         }
-      }
-    }
-  });
+    });
 });
